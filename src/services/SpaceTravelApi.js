@@ -9,7 +9,7 @@ class SpaceTravelApi
 
   static async getSpacecrafts ()
   {
-    return SpaceTravelMockApi.getSpacecrafts();
+    return await SpaceTravelMockApi.getSpacecrafts();
   }
 
   static async getSpacecraftById ({id})
