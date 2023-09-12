@@ -1,14 +1,29 @@
 import React from "react";
+import {Link, useNavigate} from "react-router-dom";
 import styles from "./SpacecrafteBrief.module.css";
+import { DEFAULT_PIC_URL } from "../context/defaults";
+import SpaceTravelApi from "../services/SpaceTravelApi";
+import Loading from "../components/Loading";
+import {useLoading} from "../context/hook";
 
 const SpacecraftBrief = ({data}) =>{
-    const DEFAULT_PIC_URL = "https://images.unsplash.com/photo-1628126235206-5260b9ea6441?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2187&q=80";
-    
+    const [isLoading, showLoading, hideLoading] = useLoading();
+    const navigate = useNavigate();
+    const handleDestroy = async (evt) =>{
+        showLoading();
+        let name = evt.target.id.substring(1);
+        await SpaceTravelApi.destroySpacecraftById({id:name});
+        navigate("/home");
+        hideLoading();
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.content_left}>
-                <div className={styles.craft_image} 
-                style={{backgroundImage:`url("${data.pictureUrl===null? DEFAULT_PIC_URL: data.pictureUrl}")`}}></div>
+                <Link className={styles.link} to={`/spacecraft/${data.id}`}>
+                    <div className={styles.craft_image} 
+                    style={{backgroundImage:`url("${data.pictureUrl===null? DEFAULT_PIC_URL: data.pictureUrl}")`}}></div>
+                </Link>
                 <div className={styles.craft_brief}>
                     <ul>
                         <li>name: {data.name}</li>
@@ -16,7 +31,8 @@ const SpacecraftBrief = ({data}) =>{
                     </ul>
                 </div>
             </div>
-            <div className={styles.content_right}>🎆Destroy</div>
+            <div className={styles.content_right} onClick={handleDestroy} id={"*"+data.id} >🎆Destroy</div>
+            {isLoading && <Loading />}
         </div>
     );
 };

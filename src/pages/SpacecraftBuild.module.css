@@ -1,0 +1,11 @@
+.page{
+    width: 80%;
+}
+.input_text{
+    width:100%;
+    display:block;
+}
+
+.button_build{
+    margin-right:5px;
+}

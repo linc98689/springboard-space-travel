@@ -13,40 +13,15 @@ const Planets = () =>{
     const [isLoading, showLoading, hideLoading] = useLoading();
 
     useEffect(()=>{
-         // return object with planet id as key, and array of crafts currently located at the planet
-        const getPcMap = () =>{
-            const mp = {};
-            const keySet = new Set(planets.map(p => p.id));
-            for(let i of keySet)
-                mp[i] = [];
-            for(let i of allCrafts)
-                mp[i.currentLocation].push(i);
-            return mp;
-        };
-
-        // planets
-        const getPlanets = async ()=>{
+        // planets and crafts
+        const getDB= async ()=>{
             showLoading();
             try{
-               let res = await SpaceTravelApi.getPlanets();
+               let res = await SpaceTravelApi.getDB();
                 if(!res.isError){
-                    setPlanets(data=>[...res.data]);
-                }
-                else{
-                    console.log(res.data);
-                }
-            }
-            catch(e){
-                console.error(e);
-            }
-        };
-
-        //crafts
-        const getCrafts = async ()=>{
-            try{
-               let res = await SpaceTravelApi.getSpacecrafts();
-                if(!res.isError){
-                    setAllCrafts(data=>[...res.data]);
+                    setPlanets(data=>[...res.data.planets]);
+                    setAllCrafts(data=>[...res.data.spacecrafts]);
+                    setPcMap(data => ({...res.data.pcmap}));
                 }
                 else{
                     console.log(res.data);
@@ -59,15 +34,10 @@ const Planets = () =>{
                 hideLoading();
             }
         };
-       
 
-        getPlanets();
-        getCrafts();
-        setPcMap(data => ({...getPcMap()}));
+        getDB();
 
-        hideLoading();
-
-    }, [planets, allCrafts]);
+    }, []);
 
     return (
         <>
@@ -76,7 +46,7 @@ const Planets = () =>{
                     <Planet planet={pl} key={pl.id} crafts={pcMap[pl.id] === undefined? []: pcMap[pl.id]}/>
                 ))}
         </div>
-        { <Loading />}
+        {isLoading && <Loading />}
        </>
     );
 };
