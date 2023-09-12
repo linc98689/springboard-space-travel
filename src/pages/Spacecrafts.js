@@ -31,13 +31,14 @@ const Spacecrafts =  ()=>{
             
             <div className={styles.page}>
                 <div className={styles.build}>
-                    Build a Spacecraft
+                    🏗️Build a Spacecraft
                 </div>
+                <div className={styles.craft_list}>
                 {crafts.map(sc=>{
-                    return <SpacecraftBrief data={sc.data} key={sc.id} />
-                }
-                )}
-            </div>}
+                    return <SpacecraftBrief data={sc} key={sc.id} />})}
+                </div>
+            </div>
+        }
         </>
       
     );

@@ -31,6 +31,7 @@ class SpaceTravelApi
   {
     return SpaceTravelMockApi.sendSpacecraftToPlanet({spacecraftId, targetPlanetId});
   }
+
 }
 
 export default SpaceTravelApi;

@@ -1,0 +1,12 @@
+.page{
+    width:80%;
+}
+.build{
+    /* border:1px dotted white; */
+    text-align: left;
+    padding:5px 0;
+    font-size: medium;
+}
+.craft_list{
+    margin-top: 10px;
+}

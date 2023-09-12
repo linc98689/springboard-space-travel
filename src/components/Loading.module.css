@@ -1,0 +1,13 @@
+.load{
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: large;
+    z-index: 2;
+    width:100vw;
+    height:100vh;
+    background-color: rgba(60, 59, 59, 0.95);   
+    text-align: center;
+    padding-top:50%;
+}
